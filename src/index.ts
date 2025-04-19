@@ -27,8 +27,9 @@ const main = async () => {
       "Is JavaScript an interpreted language?",
       "Node.js and JavaScript are the same?",
   ].map(async question => {
-      // ✅ Ask a Question and Get an Answer
+      // Ask a Question and Get an Answer
       const response = await modelUsageRoutines.getModelResponse(question, vectorDB, model);
+      console.log("\n❓ Question: \n", question);
       console.log("\n💡 Final Answer:\n", response);
   }));
 

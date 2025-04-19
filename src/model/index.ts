@@ -1,4 +1,3 @@
-import { IterableReadableStream } from "@langchain/core/dist/utils/stream";
 import { Ollama } from "@langchain/ollama";
 import * as dotenv from "dotenv";
 
@@ -9,7 +8,3 @@ export const model:Ollama = new Ollama({
   model: process.env.OLLAMA_MODEL,
   temperature: 0.9,
  });
-
-export const getModelResponseStream = async (message: string): Promise<IterableReadableStream<string>> => {
-  return await model.stream([message]);
-}

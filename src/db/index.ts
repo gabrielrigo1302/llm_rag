@@ -19,8 +19,6 @@ const vectorDBConfig:INeo4jVectorStoreArgsAdapter = {
     embeddingNodeProperty: "embedding",
 }
 
-// process.env.NEO4J_PORT ?? "",
-
 const ollamaEmbeddings = new OllamaEmbeddings({
     model: "nomic-embed-text",
     baseUrl: process.env.OLLAMA_BASE_URL
