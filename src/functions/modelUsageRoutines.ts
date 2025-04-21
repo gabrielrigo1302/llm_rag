@@ -1,7 +1,6 @@
-import { Neo4jVectorStore } from "@langchain/community/vectorstores/neo4j_vector"
-import { Ollama } from "@langchain/ollama";
+import { INeo4jVectorStoreAdapter, IOllamaAdapter } from "../adapters/interface";
 
-const getModelResponse = async (question:string, vectorDB: Neo4jVectorStore, model:Ollama) => {
+const getModelResponse = async (question:string, vectorDB: INeo4jVectorStoreAdapter, model: IOllamaAdapter) => {
     const dbResult = await vectorDB.similaritySearchWithScore(question, 1);
     const relevantChunks = dbResult?.map(result => result[0]?.pageContent?.replace('text: ', '')).filter(Boolean);
 

@@ -1,10 +1,10 @@
 import { readFile } from "node:fs/promises";
-import { Document } from "@langchain/core/documents";
+import { IDocumentAdapter } from "../adapters/interface";
 
-const getDocuments = async (): Promise<Document[] | undefined> => {
+const getDocuments = async (): Promise<IDocumentAdapter[] | undefined> => {
     try {
         return (await readFile('../llm_rag/src/data/javascript.txt', "utf8"))?.toString()?.split('.')?.map(sentence => {
-            const document:Document = {
+            const document:IDocumentAdapter = {
                 pageContent: sentence.trim(),
                 metadata: {}
             }

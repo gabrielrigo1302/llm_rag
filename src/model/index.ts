@@ -1,10 +1,9 @@
-import { Ollama } from "@langchain/ollama";
-import * as dotenv from "dotenv";
+import { langchainAdapter, configDotenvAdapter } from "../adapters/functions";
 
-dotenv.config();
+configDotenvAdapter();
 
-export const model:Ollama = new Ollama({
-  baseUrl: process.env.OLLAMA_BASE_URL,
-  model: process.env.OLLAMA_MODEL,
+export const model = langchainAdapter.initOllama({
+  baseUrl: process.env.OLLAMA_BASE_URL ?? '',
+  model: process.env.OLLAMA_MODEL ?? '',
   temperature: 0.9,
  });

@@ -1,11 +1,11 @@
-import { Neo4jVectorStore } from "@langchain/community/vectorstores/neo4j_vector";
-import { Document } from "@langchain/core/documents";
+import { IDocumentAdapter, INeo4jVectorStoreAdapter } from "../adapters/interface";
 
-const getDocument = async(document: Document, vectorDB: Neo4jVectorStore) => {
+
+const getDocument = async(document: IDocumentAdapter, vectorDB: INeo4jVectorStoreAdapter) => {
     return await vectorDB.similaritySearch(document.pageContent, 2);
 }
 
-const postDocumentIfNotExists = async(document: Document, vectorDB: Neo4jVectorStore) => {
+const postDocumentIfNotExists = async(document: IDocumentAdapter, vectorDB: INeo4jVectorStoreAdapter) => {
     const response = await getDocument(document, vectorDB);
 
     if (response.length === 0) {
@@ -13,7 +13,7 @@ const postDocumentIfNotExists = async(document: Document, vectorDB: Neo4jVectorS
     }
 }
 
-const postAllDocumentIfNotExists = async (documents: Document[], vectorDB: Neo4jVectorStore) => {
+const postAllDocumentIfNotExists = async (documents: IDocumentAdapter[], vectorDB: INeo4jVectorStoreAdapter) => {
     try {
         for (const document of documents) {
             await postDocumentIfNotExists(document, vectorDB);

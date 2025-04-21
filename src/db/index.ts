@@ -1,12 +1,12 @@
-import { Neo4jVectorStore, SearchType } from "@langchain/community/vectorstores/neo4j_vector";
-import { OllamaEmbeddings } from "@langchain/ollama";
-import { INeo4jVectorStoreArgsAdapter } from "../interfaces";
-import * as dotenv from "dotenv";
+import { configDotenvAdapter, langchainAdapter } from "../adapters/functions";
+import { INeo4jVectorStoreArgsAdapter } from "../adapters/interface";
+import { TSearchType } from "../adapters/type";
 
-dotenv.config();
-const searchType: SearchType = "vector"
+configDotenvAdapter();
 
-const vectorDBConfig:INeo4jVectorStoreArgsAdapter = {
+const searchType: TSearchType = "vector"
+
+const vectorDBConfig: INeo4jVectorStoreArgsAdapter = {
     url: process.env.NEO4J_URI ?? '',
     username: process.env.NEO4J_USER ?? '',
     password: process.env.NEO4J_PASSWORD ?? '',
@@ -19,9 +19,9 @@ const vectorDBConfig:INeo4jVectorStoreArgsAdapter = {
     embeddingNodeProperty: "embedding",
 }
 
-const ollamaEmbeddings = new OllamaEmbeddings({
+const ollamaEmbeddings = langchainAdapter.initOllamaEmbeddings({
     model: "nomic-embed-text",
-    baseUrl: process.env.OLLAMA_BASE_URL
+    baseUrl: process.env.OLLAMA_BASE_URL ?? ""
 })
 
-export const conectVectorDB = () => Neo4jVectorStore.fromExistingGraph(ollamaEmbeddings, vectorDBConfig);
+export const conectVectorDB = () => langchainAdapter.conectGraphVectorDB(ollamaEmbeddings, vectorDBConfig);

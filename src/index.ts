@@ -1,9 +1,9 @@
-import * as dotenv from "dotenv";
 import { conectVectorDB } from './db';
 import { model } from './model';
 import { modelUsageRoutines, dbManipulationRoutines, infoBaseRoutines } from './functions';
+import { configDotenvAdapter } from "./adapters/functions";
 
-dotenv.config();
+configDotenvAdapter();
 
 const main = async () => { 
   const vectorDB = await conectVectorDB();
