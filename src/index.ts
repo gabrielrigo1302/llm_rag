@@ -1,45 +1,13 @@
-import { conectVectorDB } from './db';
-import { model } from './model';
-import { modelUsageRoutines, dbManipulationRoutines, infoBaseRoutines } from './functions';
 import { configDotenvAdapter } from "./adapters/functions";
+import { routes } from './routes';
+import express from 'express';
 
 configDotenvAdapter();
 
-const main = async () => { 
-  const vectorDB = await conectVectorDB();
+const app = express();
 
-  try {
-    // const stream = await getModelResponseStream("Explique o conceito de cadeias de linguagem (LangChain) em uma frase.");
-  
-    // process.stdout.write("Resposta em streaming:\n\n");
-  
-    // for await (const content of stream) {
-    //   process.stdout.write(content);
-    // }
-  
+app.use(express.json());
 
-  const documents = await infoBaseRoutines.getDocuments();
+app.use(routes);
 
-  await dbManipulationRoutines.postAllDocumentIfNotExists(documents ?? [], vectorDB);
-
-  await Promise.all([
-      "Is JavaScript a object oriented programing language?",
-      "Is JavaScript an interpreted language?",
-      "Node.js and JavaScript are the same?",
-  ].map(async question => {
-      // Ask a Question and Get an Answer
-      const response = await modelUsageRoutines.getModelResponse(question, vectorDB, model);
-      console.log("\n❓ Question: \n", question);
-      console.log("\n💡 Final Answer:\n", response);
-  }));
-
-
-  } catch (error) {
-    process.stdout.write(error as string)
-
-  } finally {
-    vectorDB.close();
-  }
-}
-
-main();
+app.listen(process.env.HTTP_PORT, () => `servidor rodando na porta ${process.env.HTTP_PORT}`)

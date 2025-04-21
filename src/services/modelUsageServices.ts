@@ -5,7 +5,6 @@ const getModelResponse = async (question:string, vectorDB: INeo4jVectorStoreAdap
     const relevantChunks = dbResult?.map(result => result[0]?.pageContent?.replace('text: ', '')).filter(Boolean);
 
     if (relevantChunks.length === 0) {
-        console.log("⚠️ No relevant context found.");
         return "Sorry, I couldn't find enough information to answer.";
     }
 
@@ -23,11 +22,9 @@ const getModelResponse = async (question:string, vectorDB: INeo4jVectorStoreAdap
 
     `;
 
-    const response = await model.invoke(prompt);
-
-    return response;
+    return await model.invoke(prompt);
 }
 
-export const modelUsageRoutines = {
+export const modelUsageServices = {
     getModelResponse
 }

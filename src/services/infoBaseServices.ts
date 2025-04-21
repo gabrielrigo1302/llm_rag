@@ -15,6 +15,6 @@ const getDocuments = async (): Promise<IDocumentAdapter[] | undefined> => {
     }
 }
 
-export const infoBaseRoutines = {
+export const infoBaseServices = {
     getDocuments
 }

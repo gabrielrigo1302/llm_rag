@@ -1,6 +1,5 @@
 import { IDocumentAdapter, INeo4jVectorStoreAdapter } from "../adapters/interface";
 
-
 const getDocument = async(document: IDocumentAdapter, vectorDB: INeo4jVectorStoreAdapter) => {
     return await vectorDB.similaritySearch(document.pageContent, 2);
 }
@@ -23,7 +22,7 @@ const postAllDocumentIfNotExists = async (documents: IDocumentAdapter[], vectorD
     }
 }
 
-export const dbManipulationRoutines = {
+export const dbManipulationServices = {
     getDocument,
     postDocumentIfNotExists,
     postAllDocumentIfNotExists
