@@ -10,16 +10,15 @@ const getModelResponse = async (question:string, vectorDB: INeo4jVectorStoreAdap
 
     const context = relevantChunks.join("\n");
     const prompt = `
-        Answer the question concisely and naturally based on the following context:
-        Don't use information outside of the provided context.
+        Response de forma concisa e natural baseada no seguinte contexto:
+        Não use informação de fora do contexto providenciado.
 
-        Context:
+        Contexto:
         ${context}
 
-        Question: ${question}
+        Pergunta: ${question}
 
-        Provide a direct and informative response:
-
+        Informe uma resposta direta e informativa:
     `;
 
     return await model.invoke(prompt);

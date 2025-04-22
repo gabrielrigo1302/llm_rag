@@ -20,7 +20,7 @@ const vectorDBConfig: INeo4jVectorStoreArgsAdapter = {
 }
 
 const ollamaEmbeddings = langchainAdapter.initOllamaEmbeddings({
-    model: "nomic-embed-text",
+    model: process.env.OLLAMA_EMBEDDING_MODEL ?? "",
     baseUrl: process.env.OLLAMA_BASE_URL ?? ""
 })
 
